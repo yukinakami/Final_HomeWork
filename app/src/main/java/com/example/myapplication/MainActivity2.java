@@ -142,6 +142,29 @@ public class MainActivity2 extends AppCompatActivity implements Runnable {
         String title_hole = "视频标题：" + title;
         Log.i(TAG, "data: " + data);
         Log.i(TAG,"title: "+title);
+
+        //爬取视频作者
+        String namePattern = "\"name\":\"(.*?)\"";
+        Pattern name_pattern = Pattern.compile(namePattern);
+        Matcher name_matcher = name_pattern.matcher(data);
+        String name = "";
+        if (name_matcher.find()) {
+            name = name_matcher.group(1);
+        }
+        String name_real = "视频分区：" + name;
+        Log.i(TAG,"tname: "+name);
+
+        //爬取视频分区
+        String tnamePattern = "\"tname\":\"(.*?)\"";
+        Pattern tname_pattern = Pattern.compile(tnamePattern);
+        Matcher tname_matcher = tname_pattern.matcher(data);
+        String tname = "";
+        if (tname_matcher.find()) {
+            tname = tname_matcher.group(1);
+        }
+        String tname_real = "视频分区：" + tname;
+        Log.i(TAG,"tname: "+tname);
+
         //爬取视频封面
         /*String picPattern = "\"title\":\"(.*?)\"";
         Pattern pattern2 = Pattern.compile(picPattern);
@@ -225,9 +248,6 @@ public class MainActivity2 extends AppCompatActivity implements Runnable {
         String view_vrdio = "播放量：" + view + ";";
         Log.i(TAG,"view_vedio：" + view);
 
-        String information = title_hole + "\n" + text_vedio + "\n" + like_vedio + "\n" +
-                coin_vedio + "\n" + share_vedio + "\n" + favorite_vrdio + "\n" + view_vrdio;
-        Log.i(TAG,"information:" +information);
 
 
 
@@ -248,7 +268,7 @@ public class MainActivity2 extends AppCompatActivity implements Runnable {
         total_double = weight_like * int_like_data + weight_coin * int_coin_data + weight_share * int_share_data + weight_favorite * int_favorite_data;
         String total = String.valueOf(total_double);
         String total_data = "视频综合得分" + total;
-        String information_data = title_hole + "\n" + text_vedio + "\n" + like_vedio + "\n" +
+        String information_data = title_hole + "\n" + name_real + "\n" + tname_real + "\n" + text_vedio + "\n" + like_vedio + "\n" +
                 coin_vedio + "\n" + share_vedio + "\n" + favorite_vrdio + "\n" + view_vrdio + "\n" + total_data;
 
         //视频弹幕
