@@ -123,7 +123,8 @@ public class MainActivity2 extends AppCompatActivity implements Runnable {
         //视频数据
         //Intent intent = new Intent();
         //String Bv = intent.getStringExtra("url");
-        String Bv = "BV1Ts4y1i7Zo";
+        Intent intent = getIntent();
+        String Bv = intent.getStringExtra("url");
         String Bv_number_url = "https://api.bilibili.com/x/web-interface/view?bvid=" + Bv;
         String Bv_number_referer = "https://www.bilibili.com/video/" + Bv;
         String content_Bv_number = getContent(Bv_number_url, Bv_number_referer);
@@ -151,8 +152,8 @@ public class MainActivity2 extends AppCompatActivity implements Runnable {
         if (name_matcher.find()) {
             name = name_matcher.group(1);
         }
-        String name_real = "视频分区：" + name;
-        Log.i(TAG,"tname: "+name);
+        String name_real = "视频作者：" + name;
+        Log.i(TAG,"name: "+name);
 
         //爬取视频分区
         String tnamePattern = "\"tname\":\"(.*?)\"";
@@ -248,6 +249,29 @@ public class MainActivity2 extends AppCompatActivity implements Runnable {
         String view_vrdio = "播放量：" + view + ";";
         Log.i(TAG,"view_vedio：" + view);
 
+        //爬取评论数
+        String coPattern = "\"reply\":(.*?),";
+        Pattern co_pattern = Pattern.compile(coPattern);
+        Matcher co_matcher = co_pattern.matcher(data);
+        String co = "";
+        if (co_matcher.find()) {
+            co = co_matcher.group(1);
+        }
+        int int_co_data = Integer.valueOf(co);
+        String co_vrdio = "评论量：" + co;
+        Log.i(TAG,"co：" + co);
+
+        //爬取评论数
+        String danPattern = "\"danmaku\":(.*?),";
+        Pattern dan_pattern = Pattern.compile(danPattern);
+        Matcher dan_matcher = dan_pattern.matcher(data);
+        String dan = "";
+        if (dan_matcher.find()) {
+            dan = dan_matcher.group(1);
+        }
+        int int_dan_data = Integer.valueOf(dan);
+        String dan_vrdio = "弹幕量：" + dan;
+        Log.i(TAG,"dan：" + dan);
 
 
 
@@ -269,7 +293,7 @@ public class MainActivity2 extends AppCompatActivity implements Runnable {
         String total = String.valueOf(total_double);
         String total_data = "视频综合得分" + total;
         String information_data = title_hole + "\n" + name_real + "\n" + tname_real + "\n" + text_vedio + "\n" + like_vedio + "\n" +
-                coin_vedio + "\n" + share_vedio + "\n" + favorite_vrdio + "\n" + view_vrdio + "\n" + total_data;
+                coin_vedio + "\n" + share_vedio + "\n" + favorite_vrdio + "\n" + view_vrdio + "\n" + co_vrdio + "\n" + dan_vrdio + "\n" + total_data;
 
         //视频弹幕
         /*String Bv = "BV1Ts4y1i7Zo";
