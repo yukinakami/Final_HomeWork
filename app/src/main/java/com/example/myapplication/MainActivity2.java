@@ -52,7 +52,7 @@ public class MainActivity2 extends AppCompatActivity implements Runnable {
     TextView text1;
     TextView text2;
 
-    ImageView imageView;
+    Button button2;
 
 
     @SuppressLint("MissingInflatedId")
@@ -61,11 +61,32 @@ public class MainActivity2 extends AppCompatActivity implements Runnable {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         button1 = findViewById(R.id.btn1);
+        button2 = findViewById(R.id.btn2);
         text1 = findViewById(R.id.text1);
         text2 = findViewById(R.id.text2);
         Intent intent = getIntent();
         String Bv = intent.getStringExtra("url");
         text1.setText(Bv);
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(MainActivity2.this,CompareActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(MainActivity2.this,MainActivity3.class);
+                String Bv = text1.getText().toString();
+                intent.putExtra("url",Bv);
+                startActivity(intent);
+            }
+        });
+
 
         handler = new Handler(Looper.myLooper()) {
             public void handleMessage(@NonNull Message msg1) {
@@ -77,26 +98,12 @@ public class MainActivity2 extends AppCompatActivity implements Runnable {
                 }
                 super.handleMessage(msg1);
             }
-
-            public void handleMessage2(@NonNull Message msg2) {
-                //处理返回
-                if (msg2.what == 5) {
-                    String str = (String) msg2.obj;
-                    Log.i(TAG, "handleMessage2: str=" + str);
-                    text2.setText(str);
-
-                }
-                super.handleMessage(msg2);
-            }
-
-
         };
 
 
         Log.i(TAG, "onCreat: start Thread");
         Thread t = new Thread(this);
         t.start();
-
 
     }
 
@@ -105,8 +112,6 @@ public class MainActivity2 extends AppCompatActivity implements Runnable {
         Log.i(TAG, "run:线程已启动");
 
         //获取网络数据
-        String html = "";
-        String html1 = "";
         //个人信息
         /*String uid = "63231";
         String url_main = "https://api.bilibili.com/x/relation/stat?vmid=" + uid;
@@ -244,8 +249,8 @@ public class MainActivity2 extends AppCompatActivity implements Runnable {
         String view = "";
         if (view_matcher.find()) {
             view = view_matcher.group(1);
-            int int_view_data = Integer.valueOf(view);
         }
+        int int_view_data = Integer.valueOf(view);
         String view_vrdio = "播放量：" + view + ";";
         Log.i(TAG,"view_vedio：" + view);
 
@@ -261,7 +266,7 @@ public class MainActivity2 extends AppCompatActivity implements Runnable {
         String co_vrdio = "评论量：" + co;
         Log.i(TAG,"co：" + co);
 
-        //爬取评论数
+        //爬取弹幕数
         String danPattern = "\"danmaku\":(.*?),";
         Pattern dan_pattern = Pattern.compile(danPattern);
         Matcher dan_matcher = dan_pattern.matcher(data);
@@ -273,11 +278,27 @@ public class MainActivity2 extends AppCompatActivity implements Runnable {
         String dan_vrdio = "弹幕量：" + dan;
         Log.i(TAG,"dan：" + dan);
 
+        //爬取点踩数,赋分时为负值
+        String disPattern = "\"dislike\":(.*?),";
+        Pattern dis_pattern = Pattern.compile(disPattern);
+        Matcher dis_matcher = dis_pattern.matcher(data);
+        String dis = "";
+        if (dis_matcher.find()) {
+            dis = dis_matcher.group(1);
+        }
+        int int_dis_data = Integer.valueOf(dis);
+        String dis_vrdio = "点踩量：" + dis;
+        Log.i(TAG,"dan：" + dis);
 
 
-        double[][] a = new double[][] { { 1 ,1.4, 2.1, 0.8},
-                { 0.7, 1, 2.3, 1 },
-                { 0.5 ,0.7, 1 ,0.3 }, {  1.2 ,1, 1.8, 1 }
+
+        double[][] a = new double[][] { {1,1,0.5,0.3,3.1,1.7,0.7,1},
+                {1.1,1,0.4,0.2,2.7,1.2,0.6,0.9},
+                {3.2,3.8,1,0.7,3.9,2.1,0.6,0.9}, {3.4,3.7,1.8,1,4.8,3.2,2.9,3},
+                {0.6,0.7,0.4,0.1,1,0.8,0.9,0.95},
+                {0.9,1.1,0.8,0.4,2.1,1,1,1.7},
+                {1.1,0.9,1.1,0.3,1.7,1.3,1,2.3},
+                {0.9,1.2,0.6,0.5,1.5,1.2,0.8,1}
         };
         int N = a[0].length;
         double[] weight = new double[N];
@@ -289,37 +310,21 @@ public class MainActivity2 extends AppCompatActivity implements Runnable {
         double weight_coin = weights[1];
         double weight_share = weights[2];
         double weight_favorite = weights[3];
-        total_double = weight_like * int_like_data + weight_coin * int_coin_data + weight_share * int_share_data + weight_favorite * int_favorite_data;
+        double weight_view = weights[4];
+        double weight_co = weights[5];
+        double weight_dan = weights[6];
+        double weight_dis = weights[7];
+        total_double = weight_like * int_like_data + weight_coin * int_coin_data + weight_share * int_share_data
+                + weight_favorite * int_favorite_data + weight_view * int_view_data + weight_co * int_co_data
+                + weight_dan * int_dan_data - weight_dis * int_dis_data;
         String total = String.valueOf(total_double);
         String total_data = "视频综合得分" + total;
         String information_data = title_hole + "\n" + name_real + "\n" + tname_real + "\n" + text_vedio + "\n" + like_vedio + "\n" +
-                coin_vedio + "\n" + share_vedio + "\n" + favorite_vrdio + "\n" + view_vrdio + "\n" + co_vrdio + "\n" + dan_vrdio + "\n" + total_data;
-
-        //视频弹幕
-        /*String Bv = "BV1Ts4y1i7Zo";
-        String Bv_url = "https://api.bilibili.com/x/player/pagelist?bvid=" + Bv;
-        String Bv_referer = "https://www.bilibili.com/video/" + Bv;
-        String content_Bv = getContent(Bv_url,Bv_referer);
-        String cid = Cid(content_Bv);
-            String url_word = "https://comment.bilibili.com/" + cid + ".xml";
-        Document doc = null;
-        try {
-            doc = Jsoup.connect(url_word).get();
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        String doc_real = doc.toString();
-        Log.i(TAG,"视频弹幕：" +doc);*/
+                coin_vedio + "\n" + share_vedio + "\n" + favorite_vrdio + "\n" + view_vrdio + "\n" + co_vrdio + "\n" + dan_vrdio + "\n" + dis_vrdio + "\n" + total_data;
 
         //发送消息
         Message msg1 = handler.obtainMessage(5, information_data);
         handler.sendMessage(msg1);
-    }
-
-    public void onClick(View view) {
-        Intent intent = new Intent(MainActivity2.this, SearchActivity.class);
-        startActivity(intent);
     }
 
     public String getContent(String url, String referer) {

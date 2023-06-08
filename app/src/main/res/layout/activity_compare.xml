@@ -21,9 +21,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="280dp"
+        android:layout_marginTop="100dp"
         android:layout_marginEnd="24dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="80dp"
         android:background="@drawable/radius_border"
         android:orientation="vertical">
 
@@ -34,7 +34,7 @@
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
             android:gravity="center"
-            android:text="B站up主比较系统"
+            android:text="B站up主信息查询"
             android:textColor="#404040"
             android:textSize="40sp"
             android:textStyle="bold" />
@@ -45,8 +45,10 @@
             android:orientation="horizontal">
 
             <LinearLayout
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+
                 android:layout_weight="1"
                 android:orientation="vertical">
 
@@ -54,42 +56,40 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="请输入第一位up主的id"
+                    android:text="请输入b站up主的id"
                     android:textColor="#99D0FB"
-                    android:textSize="15sp"
+                    android:textSize="25sp"
+                    android:layout_marginBottom="10dp"
                     android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/edt1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="300dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/search_shape"
                     android:gravity="center"
+                    android:layout_gravity="center"
                     android:hint="请准确输入id" />
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-
+                <ImageButton
+                    android:id="@+id/btn1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="7dp"
+                    android:layout_weight="1"
+                    android:background="#00000000"
+                    android:onClick="onClick"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/btn_search" />
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="注：此功能不能频繁使用，b站每10分钟检测一次ip访问数量，如果被发现申请过于频繁就会被短暂性封掉ipQAQ"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:gravity="center"
-                    android:text="请输入第一位up主的id"
-                    android:textColor="#99D0FB"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-
-                <EditText
-                    android:id="@+id/edt2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:hint="请准确输入id" />
+                    />
 
             </LinearLayout>
         </LinearLayout>
