@@ -54,7 +54,9 @@
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="15dp"
-                android:text="null"
+                android:text="程序稳定运行，请稍后片刻~"
+                android:layout_gravity="center"
+                android:gravity="center"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 

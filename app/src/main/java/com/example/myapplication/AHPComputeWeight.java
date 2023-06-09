@@ -7,7 +7,7 @@ public class AHPComputeWeight {
      */
     //单例
     private static final AHPComputeWeight acw = new AHPComputeWeight();
-    private double[] RI = { 0.00, 0.00, 0.58, 0.90, 1.12, 1.21, 1.32, 1.41,
+    private final double[] RI = { 0.00, 0.00, 0.58, 0.90, 1.12, 1.21, 1.32, 1.41,
             1.45, 1.49 };
     // 随机一致性比率
     private double CR = 0.0;
@@ -118,20 +118,20 @@ public class AHPComputeWeight {
         for (int i = 0; i < N; i++) {
             System.out.print(w0[i] + " ");
         }
-        System.out.println("");
+        System.out.println();
 
         System.out.println("w1[]=");
         for (int i = 0; i < N; i++) {
             System.out.print(w1[i] + " ");
         }
-        System.out.println("");
+        System.out.println();
 
         System.out.println("w2[]=");
         for (int i = 0; i < N; i++) {
             weight[i] = w2[i];
             System.out.print(w2[i] + " ");
         }
-        System.out.println("");
+        System.out.println();
     }
 
     /**

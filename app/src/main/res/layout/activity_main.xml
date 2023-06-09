@@ -19,14 +19,28 @@
             android:orientation="vertical" >
 
             <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:textSize="50dp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                android:text="弹幕列表"
+                android:gravity="center"
+                />
+
+            <TextView
                 android:id="@+id/text2"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="15dp"
                 android:textSize="20sp"
                 android:textStyle="bold"
+                android:gravity="center"
                 android:text="请稍等片刻(鞠躬)" />
 
             <Button

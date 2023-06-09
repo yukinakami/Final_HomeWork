@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -47,6 +48,16 @@ public class MainActivity4 extends AppCompatActivity implements Runnable {
         Intent intent = getIntent();
         String up = intent.getStringExtra("up");
         Log.i(TAG, "up: " + up);
+        text1.setText(up);
+
+        btn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(MainActivity4.this,MainActivity3.class);
+                startActivity(intent);
+            }
+        });
 
         handler = new Handler(Looper.myLooper()) {
             public void handleMessage(@NonNull Message msg1) {

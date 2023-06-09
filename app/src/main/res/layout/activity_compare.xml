@@ -85,7 +85,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="注：此功能不能频繁使用，b站每10分钟检测一次ip访问数量，如果被发现申请过于频繁就会被短暂性封掉ipQAQ"
+                    android:text="注：此功只能随缘使用，b站API经常在改，用户页面API没有更好的版本了QAQ所以很多时候这个功能没法申请用户信息，但是相信我，代码是没有问题的"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
                     android:gravity="center"
